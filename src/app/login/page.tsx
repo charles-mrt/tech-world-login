@@ -1,38 +1,37 @@
 import Link from 'next/link'
 
 import { Lock, User2 } from 'lucide-react'
-import { Button } from '../components/Button'
-import { InputField } from '../components/InputField'
 
+import { TransitionLayout } from '../components/TransitionLayout'
+import { Header } from '../components/Header'
+import { CredentialLinks } from '../components/CredentialLinks'
+import { Form } from '../components/Form'
+import { InputField } from '../components/InputField'
+import { Button } from '../components/Button'
 
 export default function Page() {
+
   return (
 
-      <div className="w-1/2 flex justify-center">
+    <TransitionLayout >
 
-        <div className=" w-[80%] h-auto">
+      <Header>
+        <CredentialLinks rote='login' text_color='text-violet-500' border={true} name='login' />
+        <CredentialLinks rote='register' text_color='text-gray-500' name='Sign up' />
+      </Header>
 
-          <header className=" w-full mb-10">
-            <div className="flex justify-around mb-1 ">
-              <Link href={"/login"} className="text-violet-500 text-3xl">Login</Link>
+      <Form>
+        <InputField icon={<User2 />} type="text" placeHolder="email or name" />
+        <InputField icon={<Lock />} type="password" placeHolder="password" />
 
-              <Link href={"/register"} className="text-gray-500 text-3xl">Sign up</Link>
-            </div>
-            <div className="h-1 w-1/2 bg-violet-500" />
-          </header>
-
-
-          <form className="flex flex-col gap-8">
-            <InputField icon={<User2 />} type="text" placeHolder="email or name" />
-            <InputField icon={<Lock />} type="password" placeHolder="password" />
-
-            <div className="flex justify-between items-center">
-              <Link href={""} className="text-violet-500">Forgot Password ?</Link>
-              <Button text={"Login"}/>
-            </div>
-          </form>
+        <div className="flex justify-between items-center">
+          <Link href={""} className="text-violet-500">Forgot Password ?</Link>
+          <Button text={"Login"} />
         </div>
-      </div>
+      </Form>
+
+    </TransitionLayout>
 
   )
+
 }
