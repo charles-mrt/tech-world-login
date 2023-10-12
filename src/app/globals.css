@@ -22,3 +22,18 @@ body {
 }
 
 
+
+.page-transition {
+  opacity: 0;
+  animation: fadein .3s ease-in alternate forwards;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
