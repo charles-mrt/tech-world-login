@@ -21,7 +21,7 @@ export default function Page() {
 
       <Form>
         <InputField icon={<User2 />} type="text" placeHolder="name" />
-        <InputField icon={<Mail />} type="email" placeHolder="email@gmail.com" />
+        <InputField icon={<Mail />} type="email" placeHolder="email@techworld.com" />
         <InputField icon={<Lock />} type="password" placeHolder="password" />
 
         <div className="flex justify-end items-center">
