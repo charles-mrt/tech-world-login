@@ -5,11 +5,12 @@ import { ReactElement, useState } from "react"
 interface InputProps {
   icon?: ReactElement
   type: string
-  placeHolder: string
+  placeHolder?: string
+  value?: string
 }
 
 
-export const InputField = ({ icon, type, placeHolder }: InputProps) => {
+export const InputField = ({ icon, type, placeHolder, value }: InputProps) => {
 
   const [isActived, setIsActived] = useState(Boolean)
 
@@ -40,6 +41,7 @@ export const InputField = ({ icon, type, placeHolder }: InputProps) => {
         onBlur={() => handleInputFocus(false)}
         type={type}
         placeholder={placeHolder}
+        value={value}
         className=" w-full h-full border-0 focus:outline-none"
       />
     </div>
