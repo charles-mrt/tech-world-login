@@ -5,7 +5,7 @@ interface getUserProps {
   email: string
 }
 
-export const getUserEmail = ({ email }: getUserProps) => {
+export const getUserByEmail = ({ email }: getUserProps) => {
   const user = database.find(user => user.email === email)
-  return user || null
+  return user
 }

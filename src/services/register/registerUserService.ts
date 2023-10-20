@@ -13,16 +13,12 @@ interface userRegisterProps {
 }
 
 const validateFormFields = ({ name, email, password }: userRegisterProps) => {
-  
-  console.log("nome " + name)
-  console.log("email " + email)
-  console.log("password " + password)
 
   if (!name || name.length > NAME_MAX_LENGTH || name.length < NAME_MIN_LENGTH) {
     throw new Error('O nome deve conter entre 3 e 15 caracteres')
   }
 
-  if (!email || !isValidEmail(email) ) {
+  if (!email || !isValidEmail(email)) {
     throw new Error('O email inserido não é válido')
   }
 
@@ -36,21 +32,28 @@ const isValidEmail = (email: string) => {
   return emailRegex.test(email)
 }
 function isValidPassword(password: string) {
-  const passwordRegex =/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/
   return passwordRegex.test(password)
 }
 
-export const register = ({ name, email, password }: userRegisterProps) => {
-  validateFormFields({ name, email, password })
+export const registerUser = ({ name, email, password }: userRegisterProps) => {
 
-  const id = uuidv4()
-  
-  const user = {
-    id,
-    name: name,
-    email: email,
-    password: password,
-  }
+  const findEmail = database.find(user => user.email === email)
+  if (!findEmail) {
 
-  database.push(user)
+    validateFormFields({ name, email, password })
+
+    const id = uuidv4()
+
+    const user = {
+      id,
+      name: name,
+      email: email,
+      password: password,
+    }
+
+    database.push(user)
+    return user
+
+  } else throw new Error('email already exist')
 }
