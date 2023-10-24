@@ -14,6 +14,7 @@ import plant from '../../public/assets/plant.png'
 
 import Image from 'next/image'
 import { Footer } from './components/Footer'
+import { Background } from './components/Background'
 
 export const metadata = {
   title: {
@@ -36,12 +37,12 @@ export default function RootLayout({
     <html lang="en">
       
       <body className={`${titillium.variable} font-sans w-screen h-screen flex justify-center items-center bg-white`}>
-        
+      
         <main className="max-w-[700px] max-h-[400px] w-full h-full bg-white rounded-3xl shadow-custom flex items-center justify-between relative">
           
           <Image src={logo} alt="logo tech world" className="absolute top-3 left-5 w-24" />
           {children}
-          
+         
           <div className="w-1/2 h-full relative">
             <Elipses />
             <Image src={plant} alt="vaso de planta" className='image w-[314px] h-[329px] absolute z-50 -right-20 bottom-0' />
@@ -49,6 +50,7 @@ export default function RootLayout({
 
         </main>
           <Footer />
+          <Background />
       </body>
 
     </html>
