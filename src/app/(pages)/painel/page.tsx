@@ -41,7 +41,7 @@ export default function Page() {
     register, handleSubmit, formState: { errors } } = useForm<FormSchema>({
       resolver: zodResolver(zodSchema),
     })
-  const router = useRouter()
+ 
   const onSubmit = handleSubmit(async (data) => {
 
     try {
@@ -57,6 +57,11 @@ export default function Page() {
       console.error('erro ao alterar os dados', error)      
     }
   })
+
+  const router = useRouter()
+  const handleSignOut = () => {
+    router.push('/')
+  }
 
   return (
 
@@ -129,7 +134,7 @@ export default function Page() {
           `}>
 
           <Button type='submit' text='save' handleClick={() => handleUpdateUserData(false)} />
-          <Button type='button' text='Sing-out' />
+          <Button type='button' text='Sing-out' handleClick={() => handleSignOut()}/>
         </div>
 
       </form>
