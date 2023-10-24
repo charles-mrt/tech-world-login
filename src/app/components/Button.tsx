@@ -1,12 +1,13 @@
 interface buttonProps {
   text: string
-  handleClick?: () => void
+  type: "button" | "submit" | "reset"
+  handleClick?: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void> | void
 }
-export const Button = ({ text, handleClick }: buttonProps) => {
+export const Button = ({ text, type, handleClick }: buttonProps) => {
   return (
     <button
-      type="submit"
-      className="bg-violet-500 p-2 w-1/2 rounded-full text-white text-lg transition duration-150 ease-in hover:bg-violet-600"
+      type={type}
+      className="bg-violet-500 p-2 w-32 rounded-full text-white text-lg transition duration-150 ease-in hover:bg-violet-600"
       onClick={handleClick}
       >
       {text}
