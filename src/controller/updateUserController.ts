@@ -3,7 +3,7 @@ import { updateUser } from '../services/update/updateUserService'
 
 export const updateUserController = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params
+    const { id } = req.query
     const updateUserData = req.body
 
     const _updateUser = updateUser({ id, ...updateUserData })
