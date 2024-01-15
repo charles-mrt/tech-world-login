@@ -74,7 +74,7 @@ export default function Page() {
 
         <div className="flex justify-between items-center">
           <Link href={""} className="text-violet-500">Forgot Password ?</Link>
-          <Button text='Login' />
+          <Button text='Login' type='button'/>
         </div>
 
       </form>
