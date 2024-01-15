@@ -34,7 +34,13 @@ export default function Page() {
       resetField('name')
       resetField('email')
       resetField('password')
-      router.push('/painel')
+      toast.success('cadastro realizado.', {
+        autoClose:2000,  
+      })
+      setTimeout(()=> {
+        router.push('/painel')
+      },2000)    
+
 
     } catch (error) {
       toast.error('O email já existe. Por favor, escolha outro.', {
