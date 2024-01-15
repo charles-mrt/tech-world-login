@@ -6,11 +6,8 @@ import { FormSchema, zodSchema } from "../zodSchema/schema"
 
 interface FormProps {
   children: ReactNode
-  //schema: FormSchema
-  // onSubmit: SubmitHandler<FormSchema> 
   onSubmit: (data: FormSchema) => void
 }
-
 
 export const Form = ({ children, onSubmit }: FormProps) => {
   const { 
@@ -24,8 +21,7 @@ export const Form = ({ children, onSubmit }: FormProps) => {
   return (
     <form
       className="flex flex-col gap-8"
-      // onSubmit={handleSubmit((data) => onSubmit(data as FormSchema))}
-      onSubmit={handleSubmit(onSubmit)}
+       onSubmit={handleSubmit((data) => onSubmit(data as FormSchema))}
     >
       {children}
     </form>
