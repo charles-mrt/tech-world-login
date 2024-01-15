@@ -6,20 +6,14 @@ import { Lock, Mail, User2, PenSquare, LockKeyhole, UnlockKeyhole } from 'lucide
 
 import { TransitionLayout } from '@/app/components/TransitionLayout'
 import { Header } from '@/app/components/Header'
-import { Form } from '@/app/components/Form'
-import { InputField } from '@/app/components/InputField'
 import { Button } from '@/app/components/Button'
+import { InputLabel } from '@/app/components/input/InputLabel'
 
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormSchema, zodSchema } from '@/app/zodSchema/schema'
 import { updateUser } from '@/app/controller/user/updateUser'
-
-import { CredentialLinks } from '@/app/components/CredentialLinks'
-import { InputLabel } from '@/app/components/input/InputLabel'
 
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -31,17 +25,23 @@ export default function Page() {
   }
 
   const [isUpdated, setIsUpdated] = useState(false)
-
+  const [changePassword, setChangePassword] = useState(false)
+  
+  
   const handleUpdateUserData = (updating: boolean) => {
-
     setIsUpdated(updating)
+    if (!updating) setChangePassword(false)
+  }
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChangePassword(event.target.checked)
   }
 
   const {
     register, handleSubmit, formState: { errors } } = useForm<FormSchema>({
       resolver: zodResolver(zodSchema),
     })
- 
+
   const onSubmit = handleSubmit(async (data) => {
 
     try {
@@ -54,7 +54,7 @@ export default function Page() {
       toast.error('erro ao alterar os dados.', {
         autoClose: 3000,
       })
-      console.error('erro ao alterar os dados', error)      
+      console.error('erro ao alterar os dados', error)
     }
   })
 
@@ -62,7 +62,7 @@ export default function Page() {
   const handleSignOut = () => {
     router.push('/')
   }
-
+  
   return (
 
     <TransitionLayout >
@@ -85,7 +85,7 @@ export default function Page() {
 
         </div>
       </Header>
-    
+
       <form onSubmit={onSubmit} className="flex flex-col gap-8">
         <div className="relative">
           <InputLabel
@@ -93,6 +93,7 @@ export default function Page() {
             inputProps={{
               type: "text",
               placeholder: `${user.name}`,
+              defaultValue: `${isUpdated ? user.name : ''}`,
               disabled: !isUpdated,
               ...register('name')
             }}
@@ -106,6 +107,7 @@ export default function Page() {
             inputProps={{
               type: "email",
               placeholder: `${user.email}`,
+              defaultValue: `${isUpdated ? user.email : ''}`,
               disabled: !isUpdated,
               ...register('email')
             }}
@@ -113,17 +115,31 @@ export default function Page() {
           {errors.email && <span className="text-red-500 absolute -bottom-6 text-xs">{errors.email.message}</span>}
         </div>
 
-        <div className="relative">
-          <InputLabel icon={<Lock />}
-            inputProps={{
-              type: "password",
-              placeholder: "password",
-              disabled: !isUpdated,
-              ...register('password')
-            }}
+        <div className="flex gap-2 items-center ml-4 -mt-2" >
+          <label className="text-violet-500" htmlFor="change-password">alterar password?</label>
+          <input
+            type='checkbox'
+            id="change-password"
+            disabled={!isUpdated}
+            checked={changePassword}
+            onChange={handleCheckboxChange}
           />
-          {errors.password && <span className="text-red-500 absolute -bottom-6 text-xs">{errors.password.message}</span>}
         </div>
+
+        {changePassword  && (
+          <div className="relative -mt-9">
+            <InputLabel icon={<Lock />}
+              inputProps={{
+                type: "password",
+                placeholder: "password",
+                disabled: !isUpdated,
+                ...register('password', { shouldUnregister: false }),
+              }}
+            />
+            {errors.password && <span className="text-red-500 absolute -bottom-6 text-xs">{errors.password.message}</span>}
+          </div>
+        )}
+
 
         <div className={`
           flex 
@@ -134,7 +150,7 @@ export default function Page() {
           `}>
 
           <Button type='submit' text='save' handleClick={() => handleUpdateUserData(false)} />
-          <Button type='button' text='Sing-out' handleClick={() => handleSignOut()}/>
+          <Button type='button' text='Sing-out' handleClick={() => handleSignOut()} />
         </div>
 
       </form>
